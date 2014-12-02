@@ -1,0 +1,8 @@
+require 'spec_helper'
+
+<%= make_sub_modules klass %>
+describe <%= klass %> do
+  it "will kneecap you without tests" do
+    fail "You have been kneecapped!"
+  end
+end

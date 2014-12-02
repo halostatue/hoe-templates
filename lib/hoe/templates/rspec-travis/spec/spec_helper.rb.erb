@@ -1,0 +1,21 @@
+# -*- ruby encoding: utf-8 -*-
+
+require 'rubygems'
+require 'pathname'
+require 'psych'
+
+if ENV['COVERAGE']
+  require 'simplecov'
+
+  SimpleCov.start do
+    formatter SimpleCov::Formatter::HTMLFormatter
+  end
+end
+
+file   = Pathname.new(__FILE__).expand_path
+path   = file.parent
+parent = path.parent
+
+$:.unshift parent.join('lib')
+
+require '<%= file_name %>'

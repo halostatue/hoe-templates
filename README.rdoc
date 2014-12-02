@@ -1,0 +1,44 @@
+= hoe-templates
+
+home :: https://github.com/halostatue/hoe-templates/
+code :: https://github.com/halostatue/hoe-templates/
+bugs :: https://github.com/halostatue/hoe-templates/issues
+
+== Description
+
+hoe-templates is a new type of {Hoe}[https://github.com/seattlerb/hoe] plug-in,
+providing new templates to the `sow` binary to use for generating new Gem
+projects. It only works with Hoe version X or later.
+
+== Features/Problems
+
+Provides two templates:
+
+* Template `minitest-travis`: minitest with Travis CI support; also has
+  commented-out support for simplecov.
+* Template `rspec-travis`: rspec with Travis CI support.
+
+These templates also:
+
+* Use the RDoc documentation format.
+* Default to the MIT licence.
+* Include support for the :gemspec2, :git, and :doofus plug-ins.
+* Provide a Contributing file based on my Contributing files.
+* Provides a minimal .gitignore for gems.
+
+== Synopsis
+
+    sow -S minitest-travis
+    sow -S rspec-travis
+
+== Requirements
+
+Hoe
+
+== Install
+
+    gem install hoe-templates
+
+:include: Contributing.rdoc
+
+:include: Licence.rdoc

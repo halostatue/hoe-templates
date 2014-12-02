@@ -1,0 +1,62 @@
+# -*- ruby -*-
+
+require 'rubygems'
+require 'rspec'
+require 'hoe'
+
+<%=
+  found = Gem.find_files("hoe/*.rb").map { |f| File.basename(f, ".rb").to_sym }
+  extra = found - Hoe.plugins - [ :rake ]
+  default = %w(doofus gemspec2 git travis).map(&:to_sym)
+  extra.map { |name|
+    case name
+    when :doofus, :gemspec2, :git, :travis, :rubygems
+      "Hoe.plugin #{name.inspect}"
+    when :email
+      "Hoe.plugin #{name.inspect} unless ENV['CI'] or ENV['TRAVIS']"
+    else
+      "# Hoe.plugin #{name.inspect}"
+    end
+  }.sort.uniq.join("\n")
+%>
+
+Hoe.spec "<%= project %>" do
+  # HEY! If you fill these out in ~/.hoe_template/rspec-travis/Rakefile.erb,
+  # you'll never have to touch them again!
+  # (delete this comment too, of course)
+
+  developer('<%= XIF %>', '<%= XIF %>@example.com')
+
+  self.history_file = 'History.rdoc'
+  self.readme_file = 'README.rdoc'
+  self.extra_rdoc_files = FileList["*.rdoc"].to_a
+
+  license "MIT" # <%= XIF %> this should match the license in the README
+  # self.licenses = [ "MIT", ... ]
+
+  self.extra_dev_deps << ['hoe-doofus', '~> 1.0']
+  self.extra_dev_deps << ['hoe-gemspec2', '~> 1.1']
+  self.extra_dev_deps << ['hoe-git', '~> 1.5']
+  self.extra_dev_deps << ['hoe-rubygems', '~> 1.0']
+  self.extra_dev_deps << ['hoe-travis', '~> 1.2']
+  self.extra_dev_deps << ['rspec', '~> 3.0']
+  self.extra_dev_deps << ['rake', '~> 10.0']
+
+  # self.extra_dev_deps << ['simplecov', '~> 0.7']
+end
+
+unless Rake::Task.task_defined? :test
+  task :test => :spec
+  Rake::Task['travis'].prerequisites.replace(%w(spec))
+  end
+
+=begin
+namespace :test do
+  task :coverage do
+    ENV['COVERAGE'] = 'yes'
+    Rake::Task['spec'].execute
+  end
+end
+=end
+
+# vim: syntax=ruby

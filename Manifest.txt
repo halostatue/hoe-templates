@@ -1,4 +1,5 @@
 Contributing.rdoc
+Gemfile
 History.rdoc
 Licence.rdoc
 Manifest.txt
